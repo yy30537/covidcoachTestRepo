@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+<!--    <link href="/static/vendor/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">-->
+    <!-- Custom styles for this template -->
+    <link href="/static/css/starter-template.css" rel="stylesheet">
+    <link href="/static/vendor/umeditor1_2_2-utf8/themes/default/css/umeditor.min.css" type="text/css" rel="stylesheet">
+<div class="container">
+    <form action="/post/save" method="post" class="col-lg-8 col-lg-offset-2" id="form_post" style="margin-top: 15px">
+        <h2 class="form-signin-heading">Post Message</h2>
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title" class="form-control" placeholder="Title" required=""
+                    autofocus="">
+        </div>
+
+        <div class="form-group">
+            <label for="myEditor">Message</label>
+{#            <textarea name="content" id="content" cols="30" rows="10" class="form-control" placeholder="内容" required=""></textarea>#}
+            <input type="hidden" id="content" name="content" value="">
+            <!-- 加载编辑器的容器 -->
+            <script type="text/plain" id="myEditor" style="width:100%;height:240px;"></script>
+        </div>
+
+        <button class="btn btn-lg btn-primary btn-block" onclick="return doSubmit()">Post Message</button>
+    </form>
+
+</div><!-- /.container -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+{#    <script src="/static/vendor/jquery.min.js"></script>#}
+<script type="text/javascript" src="/static/vendor/umeditor1_2_2-utf8/third-party/jquery.min.js"></script>
+<!--<script src="/static/vendor/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>-->
+
+    <script type="text/javascript" src="/static/vendor/umeditor1_2_2-utf8/umeditor.config.js"></script>
+    <script type="text/javascript" src="/static/vendor/umeditor1_2_2-utf8/umeditor.min.js"></script>
+    <script type="text/javascript" src="/static/vendor/umeditor1_2_2-utf8/lang/zh-cn/zh-cn.js"></script>
+    <script type="text/javascript">
+        var um = UM.getEditor('myEditor',{
+            //这里可以选择自己需要的工具按钮名称,此处仅选择如下七个
+            toolbar:['fullscreen source undo redo bold italic underline'],
+            //focus时自动清空初始化时的内容
+            autoClearinitialContent:true,
+            //关闭字数统计
+            wordCount:false,
+            //关闭elementPath
+            elementPathEnabled:false,
+            //默认的编辑区域高度
+            initialFrameHeight:300
+            //更多其他参数，请参考umeditor.config.js中的配置项
+        });
+
+        function doSubmit() {
+            $("#content").val(um.getContent());
+            return true;
+        }
+    </script>
+{% endblock %}
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="zh-CN">-->
+<!--<head>-->
+<!--    <meta charset="utf-8">-->
+<!--    <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!--    &lt;!&ndash; 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ &ndash;&gt;-->
+<!--    <meta name="description" content="">-->
+<!--    <meta name="author" content="">-->
+
+<!--    <title>Post a new message</title>-->
+<!--    &lt;!&ndash; Bootstrap core CSS &ndash;&gt;-->
+<!--    <link href="/static/vendor/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">-->
+<!--    &lt;!&ndash; Custom styles for this template &ndash;&gt;-->
+<!--    <link href="/static/css/starter-template.css" rel="stylesheet">-->
+<!--    <link href="/static/vendor/umeditor1_2_2-utf8/themes/default/css/umeditor.min.css" type="text/css" rel="stylesheet">-->
+<!--</head>-->
+
+<!--<body>-->
+<!--<nav class="navbar navbar-inverse navbar-fixed-top">-->
+<!--    <div class="container">-->
+<!--        <div class="navbar-header">-->
+<!--            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"-->
+<!--                    aria-expanded="false" aria-controls="navbar">-->
+<!--                <span class="sr-only">Toggle navigation</span>-->
+<!--                <span class="icon-bar"></span>-->
+<!--                <span class="icon-bar"></span>-->
+<!--                <span class="icon-bar"></span>-->
+<!--            </button>-->
+<!--            <a class="navbar-brand" href="/">Home</a>-->
+<!--        </div>-->
+<!--        <div id="navbar" class="collapse navbar-collapse">-->
+<!--            <ul class="nav navbar-nav navbar-right">-->
+<!--                <li class=""><a href="/post">Post</a></li>-->
+<!--                {% if current_user.is_authenticated %}-->
+<!--                    <li><a>Welcome: {{ current_user.username }}</a></li>-->
+<!--                    <li><a href="/logout">Logout</a></li>-->
+<!--                {% else %}-->
+<!--                    <li><a href="/login">Login</a></li>-->
+<!--                    <li><a href="/register">Register</a></li>-->
+<!--                {% endif %}-->
+<!--            </ul>-->
+<!--        </div>&lt;!&ndash;/.nav-collapse &ndash;&gt;-->
+<!--    </div>-->
+<!--</nav>-->
+
+<!--<div class="container">-->
+<!--    <form action="/post/save" method="post" class="col-lg-8 col-lg-offset-2" id="form_post" style="margin-top: 15px">-->
+<!--        <h2 class="form-signin-heading">Post Message</h2>-->
+<!--        <div class="form-group">-->
+<!--            <label for="title">Title</label>-->
+<!--            <input type="text" name="title" id="title" class="form-control" placeholder="Title" required=""-->
+<!--                    autofocus="">-->
+<!--        </div>-->
+
+<!--        <div class="form-group">-->
+<!--            <label for="myEditor">Message</label>-->
+<!--{#            <textarea name="content" id="content" cols="30" rows="10" class="form-control" placeholder="内容" required=""></textarea>#}-->
+<!--            <input type="hidden" id="content" name="content" value="">-->
+<!--            &lt;!&ndash; 加载编辑器的容器 &ndash;&gt;-->
+<!--            <script type="text/plain" id="myEditor" style="width:100%;height:240px;"></script>-->
+<!--        </div>-->
+
+<!--        <button class="btn btn-lg btn-primary btn-block" onclick="return doSubmit()">Post Message</button>-->
+<!--    </form>-->
+
+<!--</div>&lt;!&ndash; /.container &ndash;&gt;-->
+
+<!--    &lt;!&ndash; Bootstrap core JavaScript-->
+<!--    ================================================== &ndash;&gt;-->
+<!--    &lt;!&ndash; Placed at the end of the document so the pages load faster &ndash;&gt;-->
+<!--{#    <script src="/static/vendor/jquery.min.js"></script>#}-->
+<!--<script type="text/javascript" src="/static/vendor/umeditor1_2_2-utf8/third-party/jquery.min.js"></script>-->
+<!--<script src="/static/vendor/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>-->
+
+<!--    <script type="text/javascript" src="/static/vendor/umeditor1_2_2-utf8/umeditor.config.js"></script>-->
+<!--    <script type="text/javascript" src="/static/vendor/umeditor1_2_2-utf8/umeditor.min.js"></script>-->
+<!--    <script type="text/javascript" src="/static/vendor/umeditor1_2_2-utf8/lang/zh-cn/zh-cn.js"></script>-->
+<!--    <script type="text/javascript">-->
+<!--        var um = UM.getEditor('myEditor',{-->
+<!--            //这里可以选择自己需要的工具按钮名称,此处仅选择如下七个-->
+<!--            toolbar:['fullscreen source undo redo bold italic underline'],-->
+<!--            //focus时自动清空初始化时的内容-->
+<!--            autoClearinitialContent:true,-->
+<!--            //关闭字数统计-->
+<!--            wordCount:false,-->
+<!--            //关闭elementPath-->
+<!--            elementPathEnabled:false,-->
+<!--            //默认的编辑区域高度-->
+<!--            initialFrameHeight:300-->
+<!--            //更多其他参数，请参考umeditor.config.js中的配置项-->
+<!--        });-->
+
+<!--        function doSubmit() {-->
+<!--            $("#content").val(um.getContent());-->
+<!--            return true;-->
+<!--        }-->
+<!--    </script>-->
+<!--</body>-->
+<!--</html>-->

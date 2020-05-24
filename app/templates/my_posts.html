@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+<!--    <link href="/static/vendor/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">-->
+    <!-- Custom styles for this template -->
+    <link href="/static/css/starter-template.css" rel="stylesheet">
+    <link href="/static/vendor/umeditor1_2_2-utf8/themes/default/css/umeditor.min.css" type="text/css" rel="stylesheet">
+<div class="container">
+
+    <div>
+        <h3>{{ user.nickname }}</h3>
+        <div>
+
+            <table class="table" style="font-size: 18px;">
+                <tr>
+                    <th>Title</th>
+                    <th>Post Time</th>
+                    <th>Operation</th>
+                </tr>
+                {% for post in posts %}
+                <tr>
+                    <td><a href="/detail?post_id={{ post.id }}">{{ post.title }}</a></td>
+                    <td>{{ post.timestamp }}</td>
+                    <td >
+                        {% if post.user_id==current_user.id %}
+                        <a style="font-size: 16px;" href="/delete?post_id={{ post.id }}" onclick="return confirm('Are you sure you want to delete this message?')" class="btn-xs">Delete</a>
+                        {% endif %}
+
+                        <a style="font-size: 16px;" href="/detail?post_id={{ post.id }}" class="btn-xs">View</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+
+            {% if posts | length <= 0 %}
+                    <h4>No Post Yet</h4>
+            {% endif %}
+        </div>
+    </div>
+
+</div><!-- /.container -->
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/static/vendor/jquery.min.js"></script>
+<!--<script src="/static/vendor/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>-->
+{% endblock %}
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="zh-CN">-->
+<!--<head>-->
+<!--    <meta charset="utf-8">-->
+<!--    <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!--    &lt;!&ndash; 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ &ndash;&gt;-->
+<!--    <meta name="description" content="">-->
+<!--    <meta name="author" content="">-->
+
+<!--    <title>My post</title>-->
+<!--    &lt;!&ndash; Bootstrap core CSS &ndash;&gt;-->
+<!--    <link href="/static/vendor/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">-->
+<!--    &lt;!&ndash; Custom styles for this template &ndash;&gt;-->
+<!--    <link href="/static/css/starter-template.css" rel="stylesheet">-->
+<!--</head>-->
+
+<!--<body>-->
+<!--<nav class="navbar navbar-inverse navbar-fixed-top">-->
+<!--    <div class="container">-->
+<!--        <div class="navbar-header">-->
+<!--            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"-->
+<!--                    aria-expanded="false" aria-controls="navbar">-->
+<!--                <span class="sr-only">Toggle navigation</span>-->
+<!--                <span class="icon-bar"></span>-->
+<!--                <span class="icon-bar"></span>-->
+<!--                <span class="icon-bar"></span>-->
+<!--            </button>-->
+<!--            <a class="navbar-brand" href="/">Home</a>-->
+<!--        </div>-->
+<!--        <div id="navbar" class="collapse navbar-collapse">-->
+<!--            <ul class="nav navbar-nav navbar-right">-->
+<!--                <li class=""><a href="/post">Post</a></li>-->
+<!--                {% if current_user.is_authenticated %}-->
+<!--                    <li><a>Welcome：{{ current_user.nickname }}</a></li>-->
+<!--                    <li><a href="/logout">Logout</a></li>-->
+<!--                {% else %}-->
+<!--                    <li><a href="/login">Login</a></li>-->
+<!--                    <li><a href="/register">Register</a></li>-->
+<!--                {% endif %}-->
+<!--            </ul>-->
+<!--        </div>&lt;!&ndash;/.nav-collapse &ndash;&gt;-->
+<!--    </div>-->
+<!--</nav>-->
+
+<!--<div class="container">-->
+
+<!--    <div>-->
+<!--        <h3>{{ user.nickname }}</h3>-->
+<!--        <div>-->
+
+<!--            <table class="table" style="font-size: 18px;">-->
+<!--                <tr>-->
+<!--                    <th>Title</th>-->
+<!--                    <th>Post Time</th>-->
+<!--                    <th>Operation</th>-->
+<!--                </tr>-->
+<!--                {% for post in posts %}-->
+<!--                <tr>-->
+<!--                    <td><a href="/detail?post_id={{ post.id }}">{{ post.title }}</a></td>-->
+<!--                    <td>{{ post.timestamp }}</td>-->
+<!--                    <td >-->
+<!--                        {% if post.user_id==current_user.id %}-->
+<!--                        <a style="font-size: 16px;" href="/delete?post_id={{ post.id }}" onclick="return confirm('Are you sure you want to delete this message?')" class="btn-xs">Delete</a>-->
+<!--                        {% endif %}-->
+
+<!--                        <a style="font-size: 16px;" href="/detail?post_id={{ post.id }}" class="btn-xs">View</a>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                {% endfor %}-->
+<!--            </table>-->
+
+<!--            {% if posts | length <= 0 %}-->
+<!--                    <h4>No Post Yet</h4>-->
+<!--            {% endif %}-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--</div>&lt;!&ndash; /.container &ndash;&gt;-->
+
+<!--&lt;!&ndash; Bootstrap core JavaScript-->
+<!--================================================== &ndash;&gt;-->
+<!--&lt;!&ndash; Placed at the end of the document so the pages load faster &ndash;&gt;-->
+<!--<script src="/static/vendor/jquery.min.js"></script>-->
+<!--<script src="/static/vendor/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>-->
+<!--</body>-->
+<!--</html>-->

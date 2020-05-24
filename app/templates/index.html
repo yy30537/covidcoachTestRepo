@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+    <div class="jumbotron" style="color:black">
+    <h1 style="color:black">Home Page</h1>
+    </div>
+	<div class="container" style="margin-bottom: 40px;">
+
+	<h3>World</h3>
+    <div id="world" style="width: 800px;height:600px;"></div>
+	<table>
+		{% for i, j in world.items() %}
+			<tr>
+				<td>{{ i }}: </td>
+				<td>{{ j }}</td>
+			</tr>
+		{% endfor %}
+	</table>
+
+	<h3>United States</h3>
+    <div id="united_states" style="width: 800px;height:600px;"></div>
+	<table>
+		{% for i, j in usa.items() %}
+			<tr>
+				<td>{{ i }}: </td>
+				<td>{{ j }}</td>
+			</tr>		
+		{% endfor %}
+	</table>
+
+    </div>
+    <script type="text/javascript">
+        var world = echarts.init(document.getElementById('world'));
+        var united_states = echarts.init(document.getElementById('united_states'));
+        function img_val(confirmed,recovered,critical,deaths,title) {
+          option = {
+            title: {
+                text: title,
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: '{a} <br/>{b} : {c} ({d}%)'
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['confirmed', 'recovered', 'critical', 'deaths']
+            },
+            series: [
+                {
+                    name: 'Infection',
+                    type: 'pie',
+                    radius: '55%',
+                    center: ['50%', '60%'],
+                    data: [
+                        {value: confirmed, name: 'confirmed'},
+                        {value: recovered, name: 'recovered'},
+                        {value: critical, name: 'critical'},
+                        {value: deaths, name: 'deaths'}
+                    ],
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+        return option
+        }
+        world.setOption(img_val(parseInt($("table").find("td").eq(1).text()),parseInt($("table").find("td").eq(3).text()),parseInt($("table").find("td").eq(5).text()),parseInt($("table").find("td").eq(7).text()),'World'));
+        united_states.setOption(img_val(parseInt($("table").find("td").eq(13).text()),parseInt($("table").find("td").eq(15).text()),parseInt($("table").find("td").eq(17).text()),parseInt($("table").find("td").eq(19).text()),'United States'))
+    </script>
+{% endblock %}
+

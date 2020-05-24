@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+<!--    <link href="/static/vendor/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">-->
+    <!-- Custom styles for this template -->
+    <link href="/static/css/starter-template.css" rel="stylesheet">
+    <link href="/static/vendor/umeditor1_2_2-utf8/themes/default/css/umeditor.min.css" type="text/css" rel="stylesheet">
+
+<div class="container" style="font-size: 18px;">
+
+        <div class="row line">
+            <h2>{{ post.title }}</h2>
+        </div>
+        <div class="row" style="margin-bottom: 25px;">
+            <p>{{ post.body | safe }}</p>
+            <br>
+            <p>
+                <span class="label label-info">{{ user.username }}</span> &nbsp;&nbsp;
+                {{ post.timestamp }}
+            </p>
+        </div>
+
+        <div class="row line">
+            <div class="line">
+                <h4>{{ replys | length }} Replies</h4>
+            </div>
+
+            {% for reply in replys %}
+                <div class="row" style="margin-bottom: 10px;">
+                    <p class="col-lg-1"><span class="label label-info">{{ reply.user.username }}</span></p>
+                    <p class="col-lg-11">{{ reply.reply.content }}</p>
+                </div>
+            {% endfor %}
+        </div>
+
+
+        {% if current_user.is_authenticated %}
+            <div class="row">
+                <form action="/reply" method="post">
+                    <div class="form-group">
+                        <label for="reply">Reply</label>
+                        <textarea name="content" id="reply" cols="30" rows="6" class="form-control"></textarea>
+                    </div>
+
+                    <input type="hidden" name="post_id" value="{{ post.id }}">
+
+                    <div class="form-group">
+                        <button class="btn btn-lg btn-primary btn-block">Post</button>
+                    </div>
+                </form>
+            </div>
+        {% else %}
+            <h4><a href="/login">Login</a>Reply after login</h4>
+        {% endif %}
+
+
+        {% for message in get_flashed_messages() %}
+            <div class="alert alert-info">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+            </div>
+        {% endfor %}
+
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/static/vendor/jquery.min.js"></script>
+<!--    <script src="/static/vendor/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>-->
+{% endblock %}
+<!--<!DOCTYPE html>-->
+<!--<html lang="zh-CN">-->
+<!--  <head>-->
+<!--    <meta charset="utf-8">-->
+<!--    <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!--    &lt;!&ndash; 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ &ndash;&gt;-->
+<!--    <meta name="description" content="">-->
+<!--    <meta name="author" content="">-->
+
+<!--    <title>Posted Posts</title>-->
+<!--    &lt;!&ndash; Bootstrap core CSS &ndash;&gt;-->
+<!--    <link href="/static/vendor/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">-->
+<!--    &lt;!&ndash; Custom styles for this template &ndash;&gt;-->
+<!--    <link href="/static/css/starter-template.css" rel="stylesheet">-->
+<!--      <style>-->
+<!--          .line {-->
+<!--              border-bottom: solid 1px #9acfea;-->
+<!--              margin-bottom: 15px;-->
+<!--          }-->
+<!--      </style>-->
+<!--  </head>-->
+
+<!--  <body>-->
+<!--    <nav class="navbar navbar-inverse navbar-fixed-top">-->
+<!--      <div class="container">-->
+<!--        <div class="navbar-header">-->
+<!--          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">-->
+<!--            <span class="sr-only">Toggle navigation</span>-->
+<!--            <span class="icon-bar"></span>-->
+<!--            <span class="icon-bar"></span>-->
+<!--            <span class="icon-bar"></span>-->
+<!--          </button>-->
+<!--          <a class="navbar-brand" href="/">Home</a>-->
+<!--        </div>-->
+<!--        <div id="navbar" class="collapse navbar-collapse">-->
+<!--          <ul class="nav navbar-nav navbar-right">-->
+<!--                <li class=""><a href="/post">Post</a></li>-->
+<!--                {% if current_user.is_authenticated %}-->
+<!--                    <li><a href="/userposts?user_id={{ current_user.id }}">Welcome: {{ current_user.username }}</a></li>-->
+<!--                    <li><a href="/logout">Logout</a></li>-->
+<!--                {% else %}-->
+<!--                    <li><a href="/login">Login</a></li>-->
+<!--                    <li><a href="/register">Register</a></li>-->
+<!--                {% endif %}-->
+<!--            </ul>-->
+<!--        </div>&lt;!&ndash;/.nav-collapse &ndash;&gt;-->
+<!--      </div>-->
+<!--    </nav>-->
+
+<!--    <div class="container" style="font-size: 18px;">-->
+
+<!--        <div class="row line">-->
+<!--            <h2>{{ post.title }}</h2>-->
+<!--        </div>-->
+<!--        <div class="row" style="margin-bottom: 25px;">-->
+<!--            <p>{{ post.body | safe }}</p>-->
+<!--            <br>-->
+<!--            <p>-->
+<!--                <span class="label label-info">{{ user.username }}</span> &nbsp;&nbsp;-->
+<!--                {{ post.timestamp }}-->
+<!--            </p>-->
+<!--        </div>-->
+
+<!--        <div class="row line">-->
+<!--            <div class="line">-->
+<!--                <h4>{{ replys | length }} Replies</h4>-->
+<!--            </div>-->
+
+<!--            {% for reply in replys %}-->
+<!--                <div class="row" style="margin-bottom: 10px;">-->
+<!--                    <p class="col-lg-1"><span class="label label-info">{{ reply.user.username }}</span></p>-->
+<!--                    <p class="col-lg-11">{{ reply.reply.content }}</p>-->
+<!--                </div>-->
+<!--            {% endfor %}-->
+<!--        </div>-->
+
+
+<!--        {% if current_user.is_authenticated %}-->
+<!--            <div class="row">-->
+<!--                <form action="/reply" method="post">-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="reply">Reply</label>-->
+<!--                        <textarea name="content" id="reply" cols="30" rows="6" class="form-control"></textarea>-->
+<!--                    </div>-->
+
+<!--                    <input type="hidden" name="post_id" value="{{ post.id }}">-->
+
+<!--                    <div class="form-group">-->
+<!--                        <button class="btn btn-lg btn-primary btn-block">Post</button>-->
+<!--                    </div>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        {% else %}-->
+<!--            <h4><a href="/login">Login</a>Reply after login</h4>-->
+<!--        {% endif %}-->
+
+
+<!--        {% for message in get_flashed_messages() %}-->
+<!--            <div class="alert alert-info">-->
+<!--            <button type="button" class="close" data-dismiss="alert">&times;</button>-->
+<!--            {{ message }}-->
+<!--            </div>-->
+<!--        {% endfor %}-->
+
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Bootstrap core JavaScript-->
+<!--    ================================================== &ndash;&gt;-->
+<!--    &lt;!&ndash; Placed at the end of the document so the pages load faster &ndash;&gt;-->
+<!--    <script src="/static/vendor/jquery.min.js"></script>-->
+<!--    <script src="/static/vendor/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>-->
+<!--  </body>-->
+<!--</html>-->

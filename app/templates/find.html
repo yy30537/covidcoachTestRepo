@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+    <div class="jumbotron" style="color:black">
+    <h1 style="color:black">Find hospital in Oregon</h1>
+    </div>
+<!--https://www.google.com/maps/embed/v1/place
+  ?key=YOUR_API_KEY
+  &q=Eiffel+Tower,Paris+France-->
+  <iframe src="https://www.google.com/maps/d/embed?mid=1wqyo3X6LsFmU9eo1rt-3fRPwwlnnt5r7" 
+    width="1200" height="650"></iframe>
+{% endblock %}

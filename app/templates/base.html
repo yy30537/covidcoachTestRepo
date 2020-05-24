@@ -1,0 +1,48 @@
+{% extends "bootstrap/base.html" %}
+
+<title>
+    {% block title %}
+    {% if title %}
+     {{ title }}
+    {% else %}
+      Covid Webstie by Team 3
+    {% endif %}
+    {% endblock %}
+</title>
+{% block head %}
+    {{ super() }}
+    <style type="text/css">
+
+    body {
+        font-family: PingFangSC-Regular, Verdana, Arial, 微软雅黑, 宋体;
+        font-size: 16px;
+    }
+    </style>
+    <script src="../static/js/echarts.min.js"></script>
+    <script src="../static/js/jquery.min.js"></script>
+{% endblock %}
+
+{% block navbar %}
+  {% include 'navbar.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                {% with messages = get_flashed_messages(with_categories=True) %}
+                  {% if messages %}
+                    {% for category, message in messages %}
+                      <div class="alert alert-{{ category }}">
+                          {{ message }}
+                      </div>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+        {% block app_content %}
+        {% endblock %}
+    </div>
+{% endblock %}
+

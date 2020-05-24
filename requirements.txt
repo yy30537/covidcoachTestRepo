@@ -1,0 +1,11 @@
+flask
+flask-bootstrap
+newsapi
+pandas
+flask-sqlalchemy
+flask-wtf
+email-validator
+flask-bcrypt
+flask-login
+PyJWT
+flask-mail

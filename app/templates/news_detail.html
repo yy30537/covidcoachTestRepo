@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+
+{% block app_content %}
+    <style media="screen">
+		h3 {
+			text-decoration: underline;
+			color: #607de6;
+		}
+		h3:hover {
+			color: blue;
+		}
+		img{
+			width:1140px;
+			height: auto;
+			margin-top:30px;
+		}
+	</style>
+	<div class="jumbotron" style="color:black">
+    <h2 style="color:black">{{context[2]}}</h2>
+    <article style="color:blue">Author: {{context[1]}} <br> Publishing Date: {{context[6]}}</article>
+  </div>
+
+  	<div class="container">
+      {% if context[5] == None %}
+        <a> <img src="static/images/no-pic.jpg" alt=""></a>
+      {% else %}
+        <a> <img src="{{context[5]}}" alt=""> </a>
+      {% endif %}
+      <article>{{context[7]}}</article>
+      <br>
+      <button type="button" onclick="window.location.href='{{ context[4] }}';">Read More</button>
+			{% if ifLiked == 1 %}
+				<button id="like" type="button" style="color: red" onclick="myFunction({{ context[0] }});window.location.href='{{ url_for( 'unlike_page' , news_id = context[0] ) }}';">Liked</button>
+			{% else %}
+				<button id="like" type="button" onclick="myFunction({{ context[0] }});window.location.href='{{ url_for( 'like_page' , news_id = context[0] ) }}';">Like</button>
+			{% endif %}
+			<br>
+  	</div>
+
+		<script>
+		    function myFunction(index) {
+		        y = document.getElementById("like")
+						if(y.innerHTML == "Like"){
+							y.innerHTML = "Liked";
+							y.style.color = "red";
+
+						}else{
+							y.innerHTML = "Like";
+							y.style.color = "black";
+
+						}
+
+		    }
+		</script>
+{% endblock %}
