@@ -1,1 +1,1 @@
-gunicorn --pythonpath /~/Desktop/covidcoachTestRepo run:app
+web: gunicorn run:app
