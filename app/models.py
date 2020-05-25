@@ -25,7 +25,6 @@ class User(db.Model, UserMixin):
     avatar_img = db.Column(db.String(120), default='/static/asset/default-user-image.png', nullable=False)
     # 'Post' is the Post class, backref is how we get find User from Post
     posts = db.relationship('Post', backref=db.backref('author', lazy=True))
-    posts_DM = db.relationship('Post_DM', backref='author', lazy='dynamic')
     followed = db.relationship(
         'User', secondary=followers,
         primaryjoin=(followers.c.follower_id == id),
@@ -69,25 +68,3 @@ class Post(db.Model):
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)
-
-class Post_DM(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(140))
-    body = db.Column(db.String(256))
-    timestamp = db.Column(db.Integer)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    replys = db.relationship('Reply_DM', backref='author', lazy='dynamic')
-
-    def __repr__(self):
-        return '<Post_DM %r>' % (self.title)
-
-
-class Reply_DM(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String(140))
-    timestamp = db.Column(db.Integer)
-    post_id = db.Column(db.Integer, db.ForeignKey('post_DM.id'))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
-    def __repr__(self):
-        return '<Reply_DM %r>' % (self.title)

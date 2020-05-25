@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, login_required, current_user, logout_user
 
-from app import app, bcrypt, db, models
+from app import app, bcrypt, db
 from app.forms import RegisterForm, LoginForm, PasswordRestRequestForm, ResetPasswordForm, PostTweetForm
 from app.email import send_reset_password_mail
 from app.models import User, Post
@@ -11,7 +11,6 @@ from app.initDB import initDB
 from app.helperFunctions import get_news_list
 from app.helperFunctions import get_stats_list
 import sqlite3
-import time
 
 
 @app.route('/')
@@ -249,63 +248,3 @@ def unfollow(username):
     else:
         return '404'
 
-@app.route('/post', methods=['GET'])
-def post():
-    if current_user.is_authenticated is False:
-        flash('Please log in first~')
-        return redirect(url_for('login'))
-    return render_template("post_msg.html")
-
-@app.route('/post/save', methods=['POST'])
-def save_post():
-    post = models.Post_DM(title=request.form['title'], body=request.form['content'], user_id=current_user.id, timestamp=time.time())
-    db.session.add(post)
-    db.session.commit()
-    flash('Your message already issued successfully~')
-    title = 'COVID Coach'
-    listOf2 = get_stats_list()
-    world_dict = listOf2[0]
-    usa_dict = listOf2[1]
-    return redirect(url_for('index', world=world_dict, usa=usa_dict, title=title))
-
-@app.route('/userposts', methods=['GET'])
-def user_posts():
-    if current_user.is_authenticated is False:
-        flash('Please log in first~')
-        return redirect(url_for('login'))
-
-    user_id = current_user.id
-    posts = models.Post_DM.query.filter_by(user_id=user_id).all()
-    user = models.User.query.get(user_id)
-    return render_template("my_posts.html", posts=posts, user=user)
-
-@app.route('/delete', methods=['GET'])
-def delete():
-    post_id = request.args.get('post_id')
-    post = models.Post_DM.query.get(post_id)
-    replys = models.Reply_DM.query.filter_by(post_id=post_id).all()
-    for reply in replys:
-        db.session.delete(reply)
-    db.session.delete(post)
-    db.session.commit()
-    return redirect(url_for('user_posts', user_id=current_user.id))
-
-@app.route('/detail', methods=['GET'])
-def post_detail():
-    post_id = request.args.get('post_id')
-    post = models.Post_DM.query.get(post_id)
-    user = models.User.query.get(post.user_id)
-    replys = models.Reply_DM.query.filter_by(post_id=post_id).all()
-    newReplys = []
-    for r in replys:
-        newReplys.append({'reply': r, 'user': models.User.query.get(r.user_id)})
-    return render_template("detail_msg.html", post=post, user=user, replys=newReplys)
-
-@app.route('/reply', methods=['POST'])
-def reply():
-    reply = models.Reply_DM(content=request.form['content'], post_id=request.form['post_id'],
-                         user_id=current_user.id, timestamp=time.time())
-    db.session.add(reply)
-    db.session.commit()
-    flash('Your message already issued successfully~')
-    return redirect(url_for('post_detail', post_id=request.form['post_id']))

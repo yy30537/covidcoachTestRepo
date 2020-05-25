@@ -1,24 +1,22 @@
 {% extends 'base.html' %}
 
 {% block app_content %}
-    <div class="jumbotron" style="color:black">
-    <h1 style="color:black">Home Page</h1>
-    </div>
-	<div class="container" style="margin-bottom: 40px;">
+	<h1>Home Page</h1>
+	<div class="container">
 
 	<h3>World</h3>
-    <div id="world" style="width: 800px;height:600px;"></div>
+    <div id="world" style="width: 600px;height:400px;"></div>
 	<table>
 		{% for i, j in world.items() %}
 			<tr>
 				<td>{{ i }}: </td>
 				<td>{{ j }}</td>
-			</tr>
+			</tr>		
 		{% endfor %}
 	</table>
 
 	<h3>United States</h3>
-    <div id="united_states" style="width: 800px;height:600px;"></div>
+    <div id="united_states" style="width: 600px;height:400px;"></div>
 	<table>
 		{% for i, j in usa.items() %}
 			<tr>
@@ -75,4 +73,3 @@
         united_states.setOption(img_val(parseInt($("table").find("td").eq(13).text()),parseInt($("table").find("td").eq(15).text()),parseInt($("table").find("td").eq(17).text()),parseInt($("table").find("td").eq(19).text()),'United States'))
     </script>
 {% endblock %}
-

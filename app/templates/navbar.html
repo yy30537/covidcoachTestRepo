@@ -1,22 +1,19 @@
-<nav class="navbar navbar-default" style="font-family: PingFangSC-Regular, Verdana, Arial, 微软雅黑, 宋体; font-size: 16px;">
-  <div class="container" >
+<nav class="navbar navbar-default">
+  <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
-<!--    <div class="navbar-header">-->
-<!--      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">-->
-<!--        <span class="sr-only">Toggle navigation</span>-->
-<!--        <span class="icon-bar"></span>-->
-<!--        <span class="icon-bar"></span>-->
-<!--        <span class="icon-bar"></span>-->
-<!--      </button>-->
-<!--      <a class="navbar-brand" style="color: #555;font-size: 16px" href="{{ url_for('index') }}">Home</a>-->
-<!--    </div>-->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{{ url_for('index') }}">Home</a>
+    </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="{% if request.endpoint == 'home' %}active{% endif %}">
-          <a href="{{ url_for('index') }}">Home</a>
-        </li>
         <li class="{% if request.endpoint == 'news_page' %}active{% endif %}">
           <a href="{{ url_for('news_page') }}">Get News</a>
         </li>
@@ -27,22 +24,9 @@
             <li class="{% if request.endpoint == 'find_page' %}active{% endif %}"><a href="{{ url_for('find_page') }}">Find closet hospital</a></li>
           </ul>
         </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Get Talk<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li class="{% if request.endpoint == 'post' %}active{% endif %}"><a href="{{ url_for('post') }}">New Post</a></li>
-            <li class="{% if request.endpoint == 'user_posts' %}active{% endif %}"><a href="{{ url_for('user_posts') }}">My Post</a></li>
-          </ul>
-        </li>
-          <!-- <li class="{% if request.endpoint == 'board_page' %}active{% endif %}">
+           <li class="{% if request.endpoint == 'board_page' %}active{% endif %}">
              <a href="{{ url_for('board_page') }}">Get Talk</a>
            </li>
-           <li class="{% if request.endpoint == 'board_page' %}active{% endif %}">
-             <a href="{{ url_for('post') }}">Post</a>
-            </li>
-           <li class="{% if request.endpoint == 'board_page' %}active{% endif %}">
-             <a href="{{ url_for('user_posts') }}">My Posts</a>
-           </li>  -->
       </ul>
 
 <!--      <form class="navbar-form navbar-left">-->
@@ -76,4 +60,3 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-
