@@ -8,6 +8,12 @@ from flask_sqlalchemy import SQLAlchemy
 from config import Config
 
 
+import sys
+import json
+from flask_heroku import Heroku
+
+
+
 app = Flask(__name__)
 app.config.from_object(Config)
 
@@ -19,6 +25,9 @@ login =  LoginManager(app)
 login.login_view = 'login'
 login.login_message = 'You must login to access this page'
 login.login_message_category = 'info'
+
+heroku = Heroku(app)
+
 
 from app.routes import *
 
