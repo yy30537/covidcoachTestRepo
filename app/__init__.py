@@ -26,7 +26,7 @@ login.login_view = 'login'
 login.login_message = 'You must login to access this page'
 login.login_message_category = 'info'
 
-heroku = Heroku(app)
+
 
 
 from app.routes import *
